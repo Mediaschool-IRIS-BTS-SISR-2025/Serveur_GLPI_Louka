@@ -8,7 +8,7 @@ Ce projet contient l’infrastructure Docker permettant de déployer **GLPI**, *
 
 | Service        | Port Serveur (hôte) | Port Conteneur | Description |
 |----------------|--------------------|----------------|-------------|
-| **GLPI**       | 80                 | 80             | Interface web GLPI accessible via |
+| **GLPI**       | 80                 | 80             | Interface web GLPI |
 | **MariaDB**    | 3306               | 3306           | Base de données utilisée par GLPI |
 | **phpMyAdmin** | 8081               | 80             | Interface web d’administration SQL |
 
