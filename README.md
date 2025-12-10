@@ -68,7 +68,7 @@ docker compose up -d
 4️⃣ Accéder à GLPI :
 
 ```
-http://:8080
+http:/glpi.iris.a3n.fr/:8080
 ```
 
 ---
