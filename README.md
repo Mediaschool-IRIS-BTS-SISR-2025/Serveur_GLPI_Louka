@@ -1,37 +1,110 @@
 # 📦 Projet Serveur GLPI – Louka (BTS SISR)
 
-Ce projet contient l’infrastructure Docker permettant de déployer **GLPI**, **MariaDB** et **phpMyAdmin** sur un serveur Linux. Il est conçu pour être facilement déployable sur n’importe quel serveur (VM locale ou serveur physique).
+Ce projet contient l’infrastructure Docker permettant de déployer **GLPI** et **MariaDB** sur un serveur Linux. Il est conçu pour être facilement déployable sur n’importe quel serveur (VM locale ou serveur physique).
+---
+
+# 📁 Structure du projet — Serveur GLPI
+
+Ce projet permet de déployer un serveur **GLPI** avec **Docker** (GLPI + MariaDB).
+L’objectif est d’avoir une solution de gestion de parc informatique **facile à installer, configurer et maintenir**.
 
 ---
-📁 Structure proposée (arborescence + dossiers/fichiers)
 
-Voici une arborescence type proposée pour le projet :
+## 🧱 Arborescence du projet
 
-/
-├── README.md
-├── LICENSE            # (optionnel, selon licence du projet)
-├── docker-compose.yml
-├── .env.example       # modèle de fichier .env (variables d’environnement)
-├── configs/           # configurations externes / custom (volumes Docker, overrides, etc.)
-│    ├── apache/       # config Apache / Nginx / VirtualHost, ssl, etc.
-│    ├── php/          # config PHP (php.ini, etc.) si besoin de customisation
-│    └── mariadb/      # config base de données (my.cnf, init scripts, etc.) si utile
-├── data/              # données persistantes (volumes Docker), ignorées par git
-│    ├── glpi_data/    # données GLPI (fichiers uploadés, logs, fichiers config externes, etc.)
-│    └── mysql_data/   # données MariaDB / MySQL
-├── scripts/           # scripts utiles (setup, backup, restore, migration, etc.)
-│    ├── backup.sh
-│    ├── restore.sh
-│    └── update_glpi.sh  # script d’update si automatisation
-├── docs/              # documentation du projet
-│    ├── INSTALL.md    # instructions d’installation (prérequis, étapes, ports, etc.)
-│    ├── USAGE.md      # comment utiliser le serveur, accéder à GLPI, etc.
-│    ├── CONFIG.md     # documentation des variables .env, options, custom config, ...
-│    └── ARCHITECTURE.md  # diagramme / description de l’architecture (réseau, conteneurs, volumes…)
-├── .gitignore         # ignorer data/, logs, .env, etc.
-└── (optional) ansible/ or provisioning/  # si tu veux gérer via Ansible ou autre outil d’automatisation
-     ├── playbook.yml
-     └── roles/
+```
+Serveur_GLPI/
+├── README.md                # Documentation principale du projet
+├── docker-compose.yml       # Orchestration des conteneurs (GLPI + DB)
+├── .env.example             # Modèle de fichier .env (variables d’environnement)
+├── .gitignore               # Fichiers/dossiers à ne pas versionner
+│
+├── configs/                 # Configurations personnalisées (optionnel)
+│   ├── apache/              # Config Serveur Web (SSL, vhost…)
+│   ├── php/                 # Config PHP (php.ini…)
+│   └── mariadb/             # Config DB (my.cnf, init scripts…)
+│
+├── data/                    # Données persistantes des conteneurs (non versionnées)
+│   ├── glpi_data/           # Données GLPI (documents, plugins, logs…)
+│   └── mysql_data/          # Base de données MariaDB
+│
+├── scripts/                 # Scripts utiles pour l’administration
+│   ├── backup.sh            # Sauvegarde BDD + données GLPI
+│   ├── restore.sh           # Restauration complète
+│   └── update_glpi.sh       # Mise à jour de GLPI
+│
+└── docs/                    # Partie documentation du projet
+    ├── INSTALL.md           # Installation et prérequis
+    ├── USAGE.md             # Accès au service, utilisateurs, FAQ
+    ├── CONFIG.md            # Variables .env, configuration Docker
+    └── ARCHITECTURE.md      # Schéma + description du fonctionnement
+```
+
+---
+
+## 📌 Description rapide
+
+| Élément              | Rôle                                                               |
+| -------------------- | ------------------------------------------------------------------ |
+| `docker-compose.yml` | Déploie automatiquement GLPI + MariaDB                             |
+| `.env.example`       | Sert de modèle pour créer le `.env` avec les bons paramètres       |
+| `data/`              | Contient les fichiers persistant au redémarrage des conteneurs     |
+| `configs/`           | Permet de personnaliser la configuration par défaut                |
+| `scripts/`           | Aide pour sauvegarder / restaurer / mettre à jour le serveur       |
+| `docs/`              | Documentation complète du projet pour installation & compréhension |
+
+---
+
+## 🚀 Déploiement rapide
+
+1️⃣ Copier le fichier `.env.example` → `.env`
+2️⃣ Modifier les mots de passe et paramètres dans `.env`
+3️⃣ Lancer l’installation :
+
+```bash
+docker compose up -d
+```
+
+4️⃣ Accéder à GLPI :
+
+```
+http://:8080
+```
+
+---
+
+## 🔐 Sécurité
+
+✔ Ne **jamais** pousser le fichier `.env` sur GitHub
+✔ Le dossier `data/` doit **rester local** → ajouté au `.gitignore`
+✔ Sauvegardes régulières recommandées (script fourni)
+
+---
+
+## 🧩 Services compris
+
+| Service | Port | Description                      |
+| ------- | ---- | -------------------------------- |
+| GLPI    | 80   | Interface Web de gestion de parc |
+| MariaDB | 3306 | Base de données de GLPI          |
+
+---
+
+## 🛠 Maintenance
+
+| Fonction         | Script                   |
+| ---------------- | ------------------------ |
+| Sauvegarde       | `scripts/backup.sh`      |
+| Restauration     | `scripts/restore.sh`     |
+| Mise à jour GLPI | `scripts/update_glpi.sh` |
+
+---
+
+## ✨ Auteur
+
+Projet de déploiement GLPI
+🔧 Réalisé dans le cadre du BTS SIO SISR
+👤 Lavenir Louka — Mediaschool IRIS
 
 
 
