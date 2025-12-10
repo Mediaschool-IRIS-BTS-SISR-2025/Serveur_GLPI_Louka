@@ -4,42 +4,33 @@ Ce projet contient l’infrastructure Docker permettant de déployer **GLPI**, *
 
 ---
 
-## 🌐 Services inclus
+## Structure du projet :
 
-| Service        | Port Serveur (hôte) | Port Conteneur | Description |
-|----------------|--------------------|----------------|-------------|
-| **GLPI**       | 80                 | 80             | Interface web GLPI |
-| **MariaDB**    | 3306               | 3306           | Base de données utilisée par GLPI |
-| **phpMyAdmin** | 8081               | 80             | Interface web d’administration SQL |
-
----
-
-## 🐳 Déploiement avec Docker
-
-- Installer Docker et Docker Compose :  
-  sudo apt update && sudo apt install -y docker.io docker-compose
-  sudo systemctl enable docker --now
-
-- Ouvrir les ports nécessaires : 80 (GLPI), 3306 (MariaDB), 8080 (phpMyAdmin)
-  
-- Avoir un utilisateur avec droits sudo
-
-- Créer le fichier docker-compose.yml dans un dossier /home/USER/glpi-docker/
-
-- Lancez les conteneurs :
-  cd /home/USER/glpi-docker/
-  sudo docker compose up -d
-
-- Vérifier que tous les conteneurs sont actifs :
-  sudo docker ps
-
-- Accès aux services :
-  GLPI : http://IP_SERVEUR/
-  
-  phpMyAdmin : http://IP_SERVEUR:8081
-  
-  MariaDB : localhost:3306 depuis le serveur ou via phpMyAdmin
-
+/
+├── README.md
+├── LICENSE            # (optionnel, selon licence du projet)
+├── docker-compose.yml
+├── .env.example       # modèle de fichier .env (variables d’environnement)
+├── configs/           # configurations externes / custom (volumes Docker, overrides, etc.)
+│    ├── apache/       # config Apache / Nginx / VirtualHost, ssl, etc.
+│    ├── php/          # config PHP (php.ini, etc.) si besoin de customisation
+│    └── mariadb/      # config base de données (my.cnf, init scripts, etc.) si utile
+├── data/              # données persistantes (volumes Docker), ignorées par git
+│    ├── glpi_data/    # données GLPI (fichiers uploadés, logs, fichiers config externes, etc.)
+│    └── mysql_data/   # données MariaDB / MySQL
+├── scripts/           # scripts utiles (setup, backup, restore, migration, etc.)
+│    ├── backup.sh
+│    ├── restore.sh
+│    └── update_glpi.sh  # script d’update si automatisation
+├── docs/              # documentation du projet
+│    ├── INSTALL.md    # instructions d’installation (prérequis, étapes, ports, etc.)
+│    ├── USAGE.md      # comment utiliser le serveur, accéder à GLPI, etc.
+│    ├── CONFIG.md     # documentation des variables .env, options, custom config, ...
+│    └── ARCHITECTURE.md  # diagramme / description de l’architecture (réseau, conteneurs, volumes…)
+├── .gitignore         # ignorer data/, logs, .env, etc.
+└── (optional) ansible/ or provisioning/  # si tu veux gérer via Ansible ou autre outil d’automatisation
+     ├── playbook.yml
+     └── roles/
 
 
 
