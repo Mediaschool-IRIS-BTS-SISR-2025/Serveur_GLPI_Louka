@@ -3,8 +3,9 @@
 Ce projet contient l’infrastructure Docker permettant de déployer **GLPI**, **MariaDB** et **phpMyAdmin** sur un serveur Linux. Il est conçu pour être facilement déployable sur n’importe quel serveur (VM locale ou serveur physique).
 
 ---
+📁 Structure proposée (arborescence + dossiers/fichiers)
 
-## Structure du projet :
+Voici une arborescence type proposée pour le projet :
 
 /
 ├── README.md
